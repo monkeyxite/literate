@@ -1,0 +1,20 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+% all other packages and stuff you need for the picture
+
+\begin{document}
+\tikzset{%
+player/.style = {circle, draw=blue!50, fill=blue!20, 
+                 inner sep= 0pt,  minimum size=6mm},
+  line/.style = {draw=blue, -stealth', semithick, shorten >=1pt}    
+                            }% end of tikzset
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+% your picture code
+\node[player] (1) at (0,0) {$1$};
+\node[player] (2) at (0:1)  {$2$};
+\node[player] (3) at (0:2)  {$3$};
+\draw[line] (1) edge (2)
+            (2)  to  (3);
+\end{tikzpicture}
+\end{document}
