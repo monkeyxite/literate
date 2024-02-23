@@ -1,0 +1,324 @@
+---
+title: Hello World
+title-block-banner: true
+affiliation-title: affiliation-title	
+abstract-title: abstract-title	
+description-title: description-title	
+published-title: published-title	
+author: "Jonny Hou "
+date: "Report Last Run: `r Sys.time()`"
+execute:
+  cache: true
+format: 
+  html:
+    code-fold: true
+    include-in-header:
+      - text: |
+          \usepackage{ standalone }
+          \usepackage{circuitikz}
+    toc: true
+  pdf:
+    keep-tex: true
+    include-in-header:
+      - text: |
+          \usepackage{ standalone }
+    toc: true
+    lof: true
+    lot: true
+---
+
+# Hello World
+
+This is some python code, in which we define a function `hello`:
+
+```{python} 
+def hello():
+  print("Hello")
+```
+
+```bash
+git clone
+```
+
+This is how we call it:
+
+```{python} 
+hello()
+```
+
+```haskell
+xs = [x | x <- [1..10]]
+```
+
+We can press `gd` to go to its definition.
+
+Let's demonstrate the autocompletion:
+
+```{python} 
+import numpy as np
+```
+
+And code hovers with `K`.
+
+# Furthermore
+
+And then we can work on integrating this for multiple 
+languages in the same document, like this R function:
+
+```{r} 
+hello_from_r <- function() {
+  print("hello")
+}
+```
+
+Unsurprisingly, the function does the same thing:
+
+```{r} 
+hello_from_r()
+```
+
+
+```{r}
+library(tidyverse)
+```
+
+
+For a demonstration of a line plot on a polar axis, see @fig-polar.
+
+```{python}
+#| label: fig-polar
+#| fig-cap: "A line plot on a polar axis"
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r);
+ax.set_rticks([0.5, 1, 1.5, 2]);
+ax.grid(True);
+plt.show
+```
+
+## Subcaptions
+```{python}
+#| label: fig-charts
+#| fig-cap: "Charts"
+#| fig-subcap: 
+#|   - "First"
+#|   - "Second"
+#| layout-ncol: 2
+
+import matplotlib.pyplot as plt
+plt.plot([1,23,2,4])
+plt.show()
+
+plt.plot([8,65,23,90])
+plt.show()
+```
+
+## Images
+### Tikz/PGF Graphics
+![test imported tex](test.tex)
+
+### Another way to do: strage font
+Another one 
+```{tikz, fig.cap = "Funk tikz", fig.ext = 'png'}
+#| echo: false
+#| fig-cap: "Complete pooling"
+#| fig-align: center
+#| fig-ext: png
+#| out-width: 100%
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\begin{tikzpicture}[{every node/.append style}=draw]
+  \node [rectangle] (pop) at (0, 4) {Population};
+  \node [ellipse] (y1) at (-5, 2.5) {$y_1$};
+  \node [ellipse] (y2) at (-3, 2.5) {$y_2$};
+  \node [ellipse] (y3) at (-1, 2.5) {$y_3$};
+  \node [ellipse] (y4) at (1, 2.5) {$y_4$};
+  \node [ellipse, draw=white] (ydots) at (3, 2.5) {$\dots$};
+  \node [ellipse] (yn) at (5, 2.5) {$y_n$};
+
+  \draw [-latex] (pop) to (y1);
+  \draw [-latex] (pop) to (y2);
+  \draw [-latex] (pop) to (y3);
+  \draw [-latex] (pop) to (y4);
+  \draw [-latex, dashed] (pop) to (ydots);
+  \draw [-latex] (pop) to (yn);
+\end{tikzpicture}
+```
+
+### Ref way, in html works
+Here's an empty DAG
+
+```{tikz, echo=FALSE, cache=TRUE, fig.cap="Empty DAG", fig.align="center"}
+\usetikzlibrary{positioning}
+\begin{tikzpicture}[every node/.append style={draw, minimum size=0.5cm}]
+\node [circle] (X) at (0,0) {};
+\node [circle] (Y) at (2,0) {};
+\node [rectangle] (Z) at (1,1) {};
+\path [-latex] (X) edge (Y);
+\draw [-latex] (Z) edge (Y);
+\draw [-latex] (Z) edge (X);
+\end{tikzpicture}
+```
+### way 1: in html works
+Here is a TikZ picture
+
+```{r, engine = 'tikz'}
+\begin{tikzpicture}
+ \draw (0,0) circle (1cm);
+ %\pause
+ \draw (0,0) circle (3cm);
+\end{tikzpicture}
+```
+
+### way2: TikZ picture in html works
+
+Here is a TikZ picture
+
+```{tikz, fig.cap = "Funky tikz", fig.ext = 'png'}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+\definecolor{zzffzz}{rgb}{0.6,1,0.6}
+\definecolor{ffcctt}{rgb}{1,0.8,0.2}
+\definecolor{yqyqdz}{rgb}{0.5019607843137255,0.5019607843137255,0.8509803921568627}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+\clip(-4.505289256198347,-6.316528925619829) rectangle (21.02198347107439,13.083471074380155);
+\draw [line width=2pt,pattern color=yqyqdz,fill=yqyqdz,fill opacity=0.25] (2,0) circle (3cm);
+\draw [line width=2pt,pattern color=ffcctt,fill=ffcctt,fill opacity=0.25] (6,0) circle (3cm);
+\draw [line width=2pt,pattern color=zzffzz,fill=zzffzz,fill opacity=0.25] (4,3.46415) circle (3cm);
+\end{tikzpicture}
+```
+
+
+### Roadmap with tikz
+
+https://tex.stackexchange.com/questions/159835/milestone-graphic-in-tikz
+
+https://github.com/cfiandra/timeline?tab=readme-ov-file
+
+https://github.com/foretspaisibles/blueprint
+
+
+```{tikz, fig.cap = "Funky tikz", fig.ext = 'png'}
+\begin{tikzpicture}[
+  every path/.style = {
+   ->,
+   > = stealth, 
+   rounded corners},
+  state/.style = {
+    fill = white,
+    text centered
+  },
+  node distance=1.25cm]
+
+  \definecolor{color1}{HTML}{E7AD00}
+  \definecolor{color2}{HTML}{A5CC19}
+  \definecolor{color3}{HTML}{33B29A}
+  \definecolor{color4}{HTML}{3380FF}
+  \definecolor{color5}{HTML}{9033FF}
+  \definecolor{color6}{HTML}{E5003D}
+
+\begin{scope}[
+  opacity = 1,
+  fill opacity = 0.25,
+  text opacity = 1,
+  text width = 6em,
+  text centered]
+
+  \def\firstcircle{(90:2.75cm) circle (3.5cm)}
+  \def\secondcircle{(210:2.75cm) circle (3.5cm)}
+  \def\thirdcircle{(330:2.75cm) circle (3.5cm)}
+  \draw [fill = color6] \firstcircle
+    node [above = 10em] {Conhecimento de neg{\' o}cios};
+  \draw [fill = color4] \secondcircle
+    node [below left = 10em] {Matem{\' a}tica \& Estat{\' i}stica};
+  \draw [fill = color2] \thirdcircle
+    node [below right = 10em] {Computa{\c c}{\~a}o};
+
+\end{scope}
+
+\begin{scope}
+
+  \node[state] (intuir) at (90:4.5) {Intuir};
+  \node[state] (formular) at (60:3.5) {Formular};
+  \node[state] (desenhar) at (30:2) {Desenhar};
+  \node[state] (coletar)  at (-10:4)  {Coletar};
+  \node[state] (armazenar) at (-30:5) {Armazenar};
+  \node[state] (importar) at (-55:4.5) {Importar};
+  \node[state] (manipular) at (-70:2.75) {Arrumar};
+  \node[state] (transformar) at (-90:1.5) {Transformar};
+  \node[state] (visualizar) at (-140:4.5) {Visualizar};
+  \node[state] (modelar) at (-170:4) {Modelar};
+  \node[state] (comunicar) at (150:2) {Compreender};
+  \node[state] (agir) at (120:3.5) {Agir};
+
+  \path[draw] (formular) edge[out=-90, in=90] (desenhar);
+  \path[draw] (desenhar) edge[out=-90, in=90] (coletar);
+  \path[draw] (coletar) edge[out=-70, in=90] (armazenar);
+  \path[draw] (armazenar) edge[out=-90, in=0] (importar);
+  \path[draw] (importar) edge[out=180, in=-90] (manipular);
+  \path[draw] (manipular) edge[out=90, in=-90] (transformar);
+  \path[draw] (transformar) edge[out=-120, in=0] (visualizar);
+  \path[draw] (visualizar) edge[out=160, in=210] (modelar);
+  \path[draw] (modelar) edge[out=0, in=140] (transformar);
+  \path[draw] (modelar) edge[out=90, in=-90] (comunicar);
+  \path[draw] (comunicar) edge[out=90, in=-90] (agir);
+  \path[draw] (agir) edge[out=90, in=180] (intuir);
+  \path[draw] (intuir) edge[out=0, in=90] (formular);
+
+\end{scope}
+
+\end{tikzpicture}
+```
+
+### flow
+```{tikz, fig.cap = "Funky tikz", fig.ext = 'png'}
+\begin{tikzpicture}
+    \filldraw[red, thick] (0, 0) rectangle (2, 2);
+\end{tikzpicture}
+
+
+```
+### circuit
+<!-- ```{r, eval = TRUE, engine = 'tikz', engine.opts = list (template ="overview-header.tex") } -->
+```{tikz, engine.opts=list(extra.preamble=c("\\usepackage{xcolor}", "\\usepackage{circuitikz}"))}
+
+\begin{circuitikz}[american, voltage shift=0.5, scale=3] 
+\draw (0,0) to[isource, l=$I_0$, v=$V_0$] (0,3) to[short, -*, i=$I_0$] (2,3) to[R=$R_1$, i>_=$i_1$] (2,0) -- (0,0); 
+\draw (2,3) -- (4,3) to[R=$R_2$, i>_=$i_2$] (4,0) to[short, -*] (2,0); \end{circuitikz} 
+```
+
+### standalone
+
+# FAQ
+
+1. "! LaTeX Error: Can be used only in preamble."
+
+    Asnswer: In the yaml header , adding the packages needed
+
+2. r with tikz engine(by using knir?) seems most realiable way to include tikz picture
+
+3. how to using latex standalone package for reuseable components?  Test with standalone tikz figure and parameterize it.
+
+    Now finally, by using the knivr package refer the template config to use standalone package to parameterize the input for drawing diagrams.
+    By defined template, it could define extra things and tikz picture, and there is other way to use preamble packages.
+    {r, eval = TRUE, engine = 'tikz', engine.opts = list (template ="overview-header.tex") }
+
+4. With tikz engine latex, with extra preamble
+ 
+    {tikz, engine.opts=list(extra.preamble=c("\\usepackage{xcolor}", "\\usepackage{circuitikz}"))}
+
+5. how to caching figures or computations:
+
+    [quarto tutorial](https://quarto.org/docs/get-started/computations/rstudio.html#caching)
+    You can use the cache option either at the document level using the YAML execute option.
+    execute:
+      cache: true
+    However caching all code chunks in a document may not be preferable. You can also indicate which chunks should be cached directly with using a chunk option.
+    #| cache: true
