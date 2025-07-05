@@ -313,6 +313,65 @@ https://github.com/foretspaisibles/blueprint
 
 ### standalone
 
+# Quarto Cheat Sheet
+
+This section provides a quick reference for some of the most common and useful features in Quarto.
+
+## Equations
+
+You can write LaTeX equations inline like this: $\alpha+\beta=\gamma$. For block-level equations, use `$`:
+
+$
+\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+$
+
+You can give it a label for cross-referencing, like this one for the famous Euler's identity (@eq-euler).
+
+$
+e^{i\pi} + 1 = 0
+$ {#eq-euler}
+
+## Callouts
+
+Callout blocks are useful for highlighting important information.
+
+::: {.callout-note}
+This is a note. It's useful for providing additional information.
+:::
+
+::: {.callout-warning}
+This is a warning. Use it to alert readers to potential pitfalls.
+:::
+
+::: {.callout-tip}
+This is a tip. It can provide a helpful piece of advice.
+:::
+
+## Tabsets
+
+You can use tabsets to show different pieces of content in a single space.
+
+::: {.panel-tabset}
+### Tab 1
+
+This is the content of the first tab.
+
+### Tab 2
+
+And this is the content of the second tab. You can even include code blocks:
+
+```{python}
+#| echo: true
+print("Hello from a tabset!")
+```
+:::
+
+## Cross-references
+
+We already saw how to reference an equation with `@eq-euler`. You can also reference figures, like the polar plot we created earlier: @fig-polar.
+
+To reference a section, you need to give it an ID like this: `## My Section {#sec-my-section}`. Then you can link to it using `[@sec-my-section]`.
+
 # FAQ
 
 1. "! LaTeX Error: Can be used only in preamble."
