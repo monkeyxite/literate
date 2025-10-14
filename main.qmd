@@ -12,10 +12,6 @@ execute:
 format: 
   html:
     code-fold: true
-    include-in-header:
-      - text: |
-          \usepackage{ standalone }
-          \usepackage{circuitikz}
     toc: true
   pdf:
     keep-tex: true
@@ -121,8 +117,24 @@ plt.show()
 ```
 
 ## Images
-### raw LaTeX
+### raw LaTeX -> only works for PDF?
+
+#### Raw Latex 
+
 ```{latex}
+\begin{tabular}{|l|l|}\hline
+Age & Frequency \\ \hline
+18--25  & 15 \\
+26--35  & 33 \\
+36--45  & 22 \\ \hline
+\end{tabular}
+```
+
+
+
+#### Raw latex with tikzpicture, doesn't work either
+```{=latex}
+
 \begin{tikzpicture}[{every node/.append style}=draw]
   \node [rectangle] (pop) at (0, 4) {Population};
   \node [ellipse] (y1) at (-5, 2.5) {$y_1$};
@@ -139,6 +151,7 @@ plt.show()
   \draw [-latex, dashed] (pop) to (ydots);
   \draw [-latex] (pop) to (yn);
 \end{tikzpicture}
+
 ```
 
 ### Another way to do: strange font
@@ -311,6 +324,17 @@ https://github.com/foretspaisibles/blueprint
 \draw (2,3) -- (4,3) to[R=$R_2$, i>_=$i_2$] (4,0) to[short, -*] (2,0); \end{circuitikz} 
 ```
 
+Fix the canvas empty by removing scale, doesn't work.
+export as svg, not by default pdf works! though font is bit strange...
+```{tikz, engine.opts=list(extra.preamble=c("\\usepackage{xcolor}", "\\usepackage{circuitikz}"))}
+#| echo: false
+#| fig.align: center
+#| fig.ext: svg
+\begin{circuitikz}[american, voltage shift=0.5, scale=3] 
+\draw (0,0) to[isource, l=$I_0$, v=$V_0$] (0,3) to[short, -*, i=$I_0$] (2,3) to[R=$R_1$, i>_=$i_1$] (2,0) -- (0,0); 
+\draw (2,3) -- (4,3) to[R=$R_2$, i>_=$i_2$] (4,0) to[short, -*] (2,0); \end{circuitikz} 
+```
+
 ### standalone
 
 # Quarto Cheat Sheet
@@ -321,15 +345,15 @@ This section provides a quick reference for some of the most common and useful f
 
 You can write LaTeX equations inline like this: $\alpha+\beta=\gamma$. For block-level equations, use `$`:
 
-$
+$$
 \int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
-$
+$$
 
 You can give it a label for cross-referencing, like this one for the famous Euler's identity (@eq-euler).
 
-$
+$$
 e^{i\pi} + 1 = 0
-$ {#eq-euler}
+$$ {#eq-euler}
 
 ## Callouts
 
@@ -352,17 +376,22 @@ This is a tip. It can provide a helpful piece of advice.
 You can use tabsets to show different pieces of content in a single space.
 
 ::: {.panel-tabset}
-### Tab 1
+### Python
 
-This is the content of the first tab.
+@eq-euler
 
-### Tab 2
+### R
 
-And this is the content of the second tab. You can even include code blocks:
-
-```{python}
-#| echo: true
-print("Hello from a tabset!")
+``` {r}
+fizz_buzz <- function(fbnums = 1:50) {
+  output <- dplyr::case_when(
+    fbnums %% 15 == 0 ~ "FizzBuzz",
+    fbnums %% 3 == 0 ~ "Fizz",
+    fbnums %% 5 == 0 ~ "Buzz",
+    TRUE ~ as.character(fbnums)
+  )
+  print(output)
+}
 ```
 :::
 
@@ -376,7 +405,10 @@ To reference a section, you need to give it an ID like this: `## My Section {#se
 
 1. "! LaTeX Error: Can be used only in preamble."
 
-    Asnswer: In the yaml header , adding the packages needed
+    Asnswer: 
+    - In the yaml header , adding the packages needed. 
+    - For html case, seems remove header doesn't impact, as long as has tikz figure extrapreamble usepackage section.
+
 
 2. r with tikz engine(by using knir?) seems most realiable way to include tikz picture
 
@@ -398,3 +430,6 @@ To reference a section, you need to give it an ID like this: `## My Section {#se
       cache: true
     However caching all code chunks in a document may not be preferable. You can also indicate which chunks should be cached directly with using a chunk option.
     #| cache: true
+6. there might be python/r mix problem
+
+7. font with svg in tikz, refer below to [fix](https://www.andrewheiss.com/blog/2021/08/27/tikz-knitr-html-svg-fun/)
