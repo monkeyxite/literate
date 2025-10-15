@@ -1,0 +1,74 @@
+---
+title: circuitikz-demo
+# jupyter: python3
+execute: 
+  cache: true
+
+lightbox: auto
+
+format: 
+  html:
+    code-fold: true
+    toc: true
+  pdf:
+    keep-tex: true
+
+---
+# Hello Circuitikz
+
+## Tutorial
+
+And then we can work on integrating this for multiple 
+languages in the same document, like this R function:
+
+
+
+
+
+### circuitikz manual tutorial ch2
+
+Code for 2.1
+
+
+```{r}
+library(tidyverse)
+```
+```{tikz, engine.opts=list(extra.preamble=c("\\usepackage{xcolor}", "\\usepackage{circuitikz}")), cache=TRUE, fig.ext="png"}
+\begin{circuitikz}[american] 
+  \draw (0,0) to[isource, l=$I_0$, v=$V_0$](0,3) 
+        to[short, -*, i=$I_0$](2,3)
+        to[R=$R_1$, i>_=$i_1$](2,0) -- (0,0);
+  \draw (2,3) --(4,3) to[R=$R_2$, i>_=$i_2$](4,0) 
+        to[short, -*](2,0);
+  \draw[red, thick] (0.6,2.1) rectangle (4.2,3.8)
+    node[pos=0.5, above]{KCL};
+\end{circuitikz}
+```
+### Code for 2.2
+
+```{tikz, engine.opts=list(extra.preamble=c("\\usepackage{xcolor}", "\\usepackage{circuitikz}"))}
+
+\begin{circuitikz}[american, voltage shift=0.5, scale=3] 
+    \draw (0,0) node[above]{$v_i$} to [short, o-] ++(1,0)
+    node[op amp, noinv input up, anchor=+](OA){\texttt{OA1}}
+    (OA.-) -- ++(0,-1) coordinate(FB)
+    ;
+\end{circuitikz}
+```
+
+### code for 2.3
+
+```{tikz, engine.opts=list(extra.preamble=c("\\usepackage{xcolor}", "\\usepackage{circuitikz}"))}
+
+\begin{circuitikz}[american, voltage shift=0.5, scale=3] 
+    \draw 
+        (0,0) node[dinantenna] (ant) {} to[amp, l=LNA] ++(3, 0)
+        to[bandpass, l=BPF, >] ++(1,0)
+        to[short] ++(1,0) node[mixer, anchor=west] (mix) {Mixer}
+        (mix.e) to[short, -o] ++(1, 0)
+        (mix.w) node[inputarrow] {}
+        (mix.s) node[inputarrow, rotate=90]{} -- ++(0,-0.5) node[oscillator, anchor=north, label={[anchor=north]below:LO}] {};
+
+        \node[waves, scale=0.5, xshift=-2cm] at (0, 0.75) {};
+\end{circuitikz}
+

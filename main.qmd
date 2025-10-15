@@ -122,9 +122,10 @@ plt.show()
 
 ## Images
 ### Tikz/PGF Graphics
-![test imported tex](test.tex)
+Seems could not show the imported tex directly as figure but as code when import. 
+![test imported tex](tex/figure1.tex)
 
-### Another way to do: strage font
+### Another way to do: tikz code block
 Another one 
 ```{tikz, fig.cap = "Funk tikz", fig.ext = 'png'}
 #| echo: false
@@ -166,6 +167,44 @@ Here's an empty DAG
 \draw [-latex] (Z) edge (X);
 \end{tikzpicture}
 ```
+## Test r, tikz engine code block figure
+<!-- ```{r setup} -->
+<!-- options(tinytex.engine = "lualatex") -->
+<!-- ``` -->
+
+Where is the picture?
+```{r, engine = 'tikz'}
+#| label: fig-my-figure
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Some Caption"
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathreplacing}
+
+\begin{tikzpicture}
+\draw (0,0)node(a){} -- (10,0) node (b) {} ;
+\foreach \x in  {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {0, 0.2, 0.4, 0.6, 0.8, 1} % edit here for the numbers
+\draw[shift={(\x*10,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below]
+{$\x$};
+\node at (8, 0.5) (eq1) {$\textcolor{red}{\boldsymbol{SQ}}$};
+\node at (4, 0.5) (eq2) {$\textcolor{purple}{\boldsymbol{G_i(0)}}$}; 
+\node at (7, 0.5) (eq2) {$\textcolor{purple}{\boldsymbol{G_i(1)}}$}; 
+\node at (3, 0.5) (eq3) {$\textcolor{blue}{\boldsymbol{P}}$};
+\node at (0, 0.5) (eq4) {$\textcolor{black}{\boldsymbol{x_i}}$};
+\draw[decorate, decoration={brace, amplitude=6pt, mirror},] ([yshift=0.5cm]4,0.5)-- node[above=0.25cm]
+{\shortstack{Text}}([yshift=0.5cm]3,0.5);
+\draw[decorate, decoration={brace, amplitude=6pt},] ([yshift=-1cm]7,0)-- node[below=0.25cm]
+{\shortstack{Text}}([yshift=-1cm]3,0);
+\end{tikzpicture}
+```
+Finished
+
 ### way 1: in html works
 Here is a TikZ picture
 
@@ -285,18 +324,32 @@ https://github.com/foretspaisibles/blueprint
 
 
 ```
-### circuit
+### circuitikz
 <!-- ```{r, eval = TRUE, engine = 'tikz', engine.opts = list (template ="overview-header.tex") } -->
 ```{tikz, engine.opts=list(extra.preamble=c("\\usepackage{xcolor}", "\\usepackage{circuitikz}"))}
 
 \begin{circuitikz}[american, voltage shift=0.5, scale=3] 
-\draw (0,0) to[isource, l=$I_0$, v=$V_0$] (0,3) to[short, -*, i=$I_0$] (2,3) to[R=$R_1$, i>_=$i_1$] (2,0) -- (0,0); 
-\draw (2,3) -- (4,3) to[R=$R_2$, i>_=$i_2$] (4,0) to[short, -*] (2,0); \end{circuitikz} 
+    \draw 
+        (0,0) node[dinantenna] (ant) {} to[amp, l=LNA] ++(3, 0)
+        to[bandpass, l=BPF, >] ++(1,0)
+        to[short] ++(1,0) node[mixer, anchor=west] (mix) {Mixer}
+        (mix.e) to[short, -o] ++(1, 0)
+        (mix.w) node[inputarrow] {}
+        (mix.s) node[inputarrow, rotate=90]{} -- ++(0,-0.5) node[oscillator, anchor=north, label={[anchor=north]below:LO}] {};
+
+        \node[waves, scale=0.5, xshift=-2cm] at (0, 0.75) {};
+\end{circuitikz}
 ```
 
 ### standalone
 
 # FAQ
+
+0. for using tikz lib, seems extremely important to add code block like this in the first begining.
+
+```{r}
+library(tidyverse)
+```
 
 1. "! LaTeX Error: Can be used only in preamble."
 
